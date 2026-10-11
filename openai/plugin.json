@@ -1,13 +1,13 @@
 {
   "name": "scuba",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Search your saved Captures and Collections, then save useful findings to Scuba.",
   "author": {
     "name": "Scuba",
     "email": "support@scuba.app",
     "url": "https://scuba.app"
   },
-  "homepage": "https://github.com/flashback2025/scuba-plugins",
+  "homepage": "https://github.com/scuba-app/scuba-plugins",
   "keywords": [
     "scuba",
     "search",
@@ -41,6 +41,6 @@
       }
     }
   },
-  "repository": "https://github.com/flashback2025/scuba-plugins",
+  "repository": "https://github.com/scuba-app/scuba-plugins",
   "license": "MIT"
 }

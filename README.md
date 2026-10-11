@@ -22,7 +22,7 @@ The plugin connects to the hosted Scuba service at `https://api.scuba.app/mcp/`.
 
 Run `python3 scripts/package.py --output /tmp/scuba-packages` to create platform ZIPs and checksums. This command only builds local archives.
 
-The related [scuba-skills](https://github.com/flashback2025/scuba-skills) repository contains optional workflows for engineering memory and reviews.
+The related [scuba-skills](https://github.com/scuba-app/scuba-skills) repository contains optional workflows for engineering memory and reviews.
 
 ## Privacy and terms
 
