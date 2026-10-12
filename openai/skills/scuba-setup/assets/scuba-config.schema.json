@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scuba skills repository configuration",
+  "description": "Scuba skills convention, not an MCP client configuration. Store no credentials here.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "engineering_memory"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "const": 1
+    },
+    "engineering_memory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["collection_id"],
+      "properties": {
+        "collection_id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "ID of the collection explicitly selected for this repository's engineering memory."
+        }
+      }
+    }
+  }
+}

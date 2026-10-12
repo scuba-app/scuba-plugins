@@ -1,0 +1,15 @@
+{
+  "name": "scuba",
+  "owner": {
+    "name": "Scuba",
+    "url": "https://scuba.app"
+  },
+  "plugins": [
+    {
+      "name": "scuba",
+      "source": "./",
+      "description": "Shared engineering memory for your team: recall decisions and preserve useful conclusions in Scuba."
+    }
+  ],
+  "description": "Scuba skills and MCP connection for shared team knowledge."
+}

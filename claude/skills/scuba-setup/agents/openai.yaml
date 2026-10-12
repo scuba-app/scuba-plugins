@@ -1,0 +1,12 @@
+interface:
+  display_name: "Scuba Setup"
+  short_description: "Connect Scuba and configure team engineering memory"
+  default_prompt: "Use $scuba-setup to connect Scuba and choose an engineering-memory collection for this repository."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "scuba"
+      description: "Scuba capture library and shared collections"
+      transport: "streamable_http"
+      url: "https://api.scuba.app/mcp/"

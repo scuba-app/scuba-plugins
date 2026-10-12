@@ -1,0 +1,12 @@
+interface:
+  display_name: "Scuba Review Memory"
+  short_description: "Apply your team's engineering lessons to code reviews"
+  default_prompt: "Use $scuba-review-memory alongside my existing review workflow to check this change against relevant Scuba engineering lessons and prior decisions."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "scuba"
+      description: "Scuba capture library and shared collections"
+      transport: "streamable_http"
+      url: "https://api.scuba.app/mcp/"

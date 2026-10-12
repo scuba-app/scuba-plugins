@@ -1,0 +1,12 @@
+interface:
+  display_name: "Scuba Codebase Memory"
+  short_description: "Recall and preserve your team's engineering decisions"
+  default_prompt: "Use $scuba-codebase-memory to find prior decisions and failed approaches relevant to this work."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "scuba"
+      description: "Scuba capture library and shared collections"
+      transport: "streamable_http"
+      url: "https://api.scuba.app/mcp/"

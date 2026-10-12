@@ -15,3 +15,13 @@ Install this plugin in your supported client and sign in to your Scuba account w
 ## Support and privacy
 
 Contact support@scuba.app. See [privacy policy](https://scuba.app/privacy) and [terms](https://scuba.app/terms).
+
+## Engineering memory skills
+
+This package includes `scuba-setup`, `scuba-codebase-memory`, and
+`scuba-review-memory` with their supporting files. Ask your agent to use
+`scuba-setup` to select a collection for the adopting repository.
+See the [installation and team guide](https://github.com/scuba-app/scuba-plugins).
+
+Maintainers: edit skills at the repository root and run
+`python3 scripts/sync-platform-skills.py`; this package contains generated copies.

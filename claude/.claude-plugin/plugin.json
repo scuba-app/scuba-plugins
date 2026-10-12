@@ -1,13 +1,13 @@
 {
   "name": "scuba",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "Search your saved Captures and Collections, then save useful findings to Scuba.",
   "author": {
     "name": "Scuba",
     "email": "support@scuba.app",
     "url": "https://scuba.app"
   },
-  "homepage": "https://scuba.app",
+  "homepage": "https://github.com/scuba-app/scuba-plugins",
   "keywords": [
     "scuba",
     "search",
@@ -19,5 +19,6 @@
   "license": "MIT",
   "privacyPolicyUrl": "https://scuba.app/privacy",
   "supportUrl": "https://scuba.app/support",
-  "documentationUrl": "https://github.com/scuba-app/scuba-plugins/blob/main/claude/README.md"
+  "documentationUrl": "https://github.com/scuba-app/scuba-plugins/blob/main/claude/README.md",
+  "mcpServers": "./.mcp.json"
 }
