@@ -157,6 +157,10 @@ For hosts without plugin support, or teams that already manage Scuba connections
 install just the portable [Agent Skills](https://agentskills.io/specification):
 
 ```bash
+# Browse and install the available skills
+npx skills add scuba-app/scuba-plugins
+
+# Or select all three explicitly
 npx skills add scuba-app/scuba-plugins --skill scuba-setup scuba-codebase-memory scuba-review-memory
 ```
 
@@ -194,7 +198,7 @@ claude plugin validate .claude-plugin/plugin.json --strict
 ```
 
 Python is used only for validation, not by the installed workflows. Bump the version
-in both plugin manifests when shipping plugin changes; installed clients can cache
+in all plugin manifests when shipping plugin changes; installed clients can cache
 by version. Git release tags are not required.
 See [behavior checks](docs/behavior-checks.md) for acceptance scenarios.
 
@@ -205,14 +209,16 @@ directories are generated copies; edit only the canonical root `skills/`, then r
 `python3 scripts/sync-platform-skills.py`. Validation rejects stale copies. Build complete,
 self-contained ZIPs with `python3 scripts/package.py --output /tmp/scuba-packages`.
 Skills and their supporting files are included from the canonical root `skills/`.
+The Claude package remains at `claude/`, so marketplace applications pointing to
+that directory keep the same source path. Replace previously uploaded ZIPs to
+include the bundled skills.
 For local Claude development, use `claude --plugin-dir .` from this repository.
 Cursor packages can be submitted to its marketplace; vendor directory publication
 is separate from this GitHub repository. The remote MCP registry record stays in
 `registry/server.json` and the hosted endpoint remains `https://api.scuba.app/mcp/`.
 
 All new installs use `scuba-app/scuba-plugins`. The former `scuba-skills`
-repository has no existing users and can be archived after this consolidation
-merges. See [installation checks](docs/installation-checks.md).
+repository is archived; its original commit history remains available. See [installation checks](docs/installation-checks.md).
 
 ## License
 
