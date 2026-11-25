@@ -23,7 +23,7 @@ def main() -> None:
         raise ValueError("No skills found")
 
     for skill in skills:
-        match = re.match(r"\A---\n(.*?)\n---\n", skill.read_text(), re.DOTALL)
+        match = re.match(r"\A---\n(.*?)\n---\n", skill.read_text(encoding="utf-8"), re.DOTALL)
         if match is None:
             raise ValueError(f"Missing frontmatter: {skill}")
         metadata = yaml.safe_load(match.group(1))
@@ -33,7 +33,7 @@ def main() -> None:
         if len(name) > 64 or not 1 <= len(metadata["description"]) <= 1024:
             raise ValueError(f"Invalid metadata length: {skill}")
 
-        interface = yaml.safe_load((skill.parent / "agents/openai.yaml").read_text())
+        interface = yaml.safe_load((skill.parent / "agents/openai.yaml").read_text(encoding="utf-8"))
         dependency = interface["dependencies"]["tools"][0]
         if dependency != {
             "type": "mcp",
@@ -53,10 +53,10 @@ def main() -> None:
         check_links(markdown, root)
 
     assets = root / "skills/scuba-setup/assets"
-    schema = json.loads((assets / "scuba-config.schema.json").read_text())
+    schema = json.loads((assets / "scuba-config.schema.json").read_text(encoding="utf-8"))
     Draft202012Validator.check_schema(schema)
     validator = Draft202012Validator(schema, format_checker=FormatChecker())
-    example = json.loads((assets / "scuba-config.example.json").read_text())
+    example = json.loads((assets / "scuba-config.example.json").read_text(encoding="utf-8"))
     if validator.is_valid(example):
         raise ValueError("Example must require the user to choose a real destination")
     example["engineering_memory"]["collection_id"] = "123e4567-e89b-42d3-a456-426614174000"
@@ -74,8 +74,8 @@ def main() -> None:
 
 
 def validate_plugin(root: Path) -> None:
-    portable = json.loads((root / "plugin.json").read_text())
-    claude = json.loads((root / ".claude-plugin/plugin.json").read_text())
+    portable = json.loads((root / "plugin.json").read_text(encoding="utf-8"))
+    claude = json.loads((root / ".claude-plugin/plugin.json").read_text(encoding="utf-8"))
     for field in ("name", "version", "description", "author", "homepage", "repository", "license"):
         if portable[field] != claude[field]:
             raise ValueError(f"Plugin manifests disagree on {field}")
@@ -84,21 +84,21 @@ def validate_plugin(root: Path) -> None:
     if claude["mcpServers"] != "./.mcp.json":
         raise ValueError("Claude manifest must reference its bundled MCP configuration")
     for filename, transport in (("mcp.json", "streamable-http"), (".mcp.json", "http")):
-        servers = json.loads((root / filename).read_text())["mcpServers"]
+        servers = json.loads((root / filename).read_text(encoding="utf-8"))["mcpServers"]
         if servers != {"scuba": {"type": transport, "url": "https://api.scuba.app/mcp/"}}:
             raise ValueError(f"Unexpected endpoint, transport, or credential fields in {filename}")
     for filename in ("openai/plugin.json", "claude/.claude-plugin/plugin.json",
                      "cursor/.cursor-plugin/plugin.json", ".cursor-plugin/plugin.json"):
-        manifest = json.loads((root / filename).read_text())
+        manifest = json.loads((root / filename).read_text(encoding="utf-8"))
         for field in ("name", "version", "repository"):
             if manifest[field] != portable[field]:
                 raise ValueError(f"Platform manifest disagrees on {field}: {filename}")
     for filename in ("openai/mcp.json", "claude/.mcp.json", "cursor/mcp.json"):
-        servers = json.loads((root / filename).read_text())["mcpServers"]
+        servers = json.loads((root / filename).read_text(encoding="utf-8"))["mcpServers"]
         if set(servers) != {"scuba"} or servers["scuba"]["url"] != "https://api.scuba.app/mcp/":
             raise ValueError(f"Unexpected platform MCP endpoint: {filename}")
     for filename in (".agents/plugins/marketplace.json", ".claude-plugin/marketplace.json"):
-        catalog = json.loads((root / filename).read_text())
+        catalog = json.loads((root / filename).read_text(encoding="utf-8"))
         if catalog["name"] != "scuba" or len(catalog["plugins"]) != 1:
             raise ValueError(f"Unexpected catalog identity or plugin count: {filename}")
         entry = catalog["plugins"][0]
@@ -116,7 +116,7 @@ def validate_plugin(root: Path) -> None:
 
 
 def check_links(markdown: Path, boundary: Path) -> None:
-    for target in re.findall(r"\]\(([^)]+)\)", markdown.read_text()):
+    for target in re.findall(r"\]\(([^)]+)\)", markdown.read_text(encoding="utf-8")):
         if re.match(r"[a-zA-Z][a-zA-Z0-9+.-]*:", target) or target.startswith("#"):
             continue
         path = (markdown.parent / target.split("#", 1)[0]).resolve()

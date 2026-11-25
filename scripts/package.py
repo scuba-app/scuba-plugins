@@ -27,9 +27,15 @@ def main() -> None:
         package = ROOT / platform
         for name in names:
             if name.endswith('.json'):
-                json.loads((package / name).read_text())
+                json.loads((package / name).read_text(encoding='utf-8'))
         sources = {name: package / name for name in names}
-        sources.update({str(path.relative_to(ROOT)): path for path in sorted((ROOT / 'skills').rglob('*')) if path.is_file()})
+        sources.update(
+            {
+                path.relative_to(ROOT).as_posix(): path
+                for path in sorted((ROOT / 'skills').rglob('*'))
+                if path.is_file()
+            }
+        )
         archive = args.output / f'scuba-{platform}.zip'
         with ZipFile(archive, 'w', compression=ZIP_DEFLATED) as output:
             for name in sorted(sources):
@@ -42,7 +48,7 @@ def main() -> None:
             assert output.testzip() is None
         checksums.append(f'{hashlib.sha256(archive.read_bytes()).hexdigest()}  {archive.name}')
         print(f'{archive}: {len(sources)} files, verified')
-    (args.output / 'SHA256SUMS').write_text('\n'.join(checksums) + '\n')
+    (args.output / 'SHA256SUMS').write_text('\n'.join(checksums) + '\n', encoding='utf-8')
 
 
 if __name__ == '__main__':
